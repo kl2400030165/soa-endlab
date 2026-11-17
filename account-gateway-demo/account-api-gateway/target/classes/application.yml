@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: account-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: account-backend-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/internals/**
+          filters:
+            # Removes /api, /v1 and /internals.
+            # /api/v1/internals/accounts becomes /accounts.
+            - StripPrefix=3
